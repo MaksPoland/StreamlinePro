@@ -1,0 +1,108 @@
+/* Custom CSS for Kardio Health Website */
+
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Product Cards */
+.product-card {
+    transition: transform 0.3s;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.product-image-container {
+    position: relative;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+}
+
+.product-main-image {
+    max-height: 400px;
+    object-fit: cover;
+}
+
+/* Rating Stars */
+.rating {
+    color: #ffc107;
+}
+
+/* Small Lists */
+.small-list {
+    padding-left: 1rem;
+    font-size: 0.9rem;
+}
+
+.pros, .cons {
+    padding-left: 1.2rem;
+    list-style-type: none;
+}
+
+.pros li:before, .cons li:before {
+    margin-right: 8px;
+}
+
+.pros li:before {
+    content: "✓";
+    color: #28a745;
+}
+
+.cons li:before {
+    content: "✗";
+    color: #dc3545;
+}
+
+/* Reviews Section */
+.review-card {
+    border-left: 4px solid #6c757d;
+    background-color: #f8f9fa;
+}
+
+/* Footer */
+.footer {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.footer a {
+    color: #ced4da;
+}
+
+.footer a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Customer Image */
+.customer-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Call to action buttons */
+.cta-section {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+/* Testimonial carousel */
+.testimonial-carousel .carousel-control-prev,
+.testimonial-carousel .carousel-control-next {
+    width: 5%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .product-image-container {
+        min-height: 150px;
+    }
+}
