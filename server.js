@@ -90,10 +90,10 @@ app.get('/api/products', async (req, res) => {
 });
 
 // Get product by ID
-app.get('/api/products/:id', async (req, res) => {
+app.get('/api/products/:productId', async (req, res) => {
   try {
-    const { id } = req.params;
-    const result = await pool.query('SELECT * FROM products WHERE id = $1', [id]);
+    const productId = req.params.productId;
+    const result = await pool.query('SELECT * FROM products WHERE id = $1', [productId]);
     
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Product not found' });
@@ -179,12 +179,12 @@ app.post('/api/reviews', async (req, res) => {
 });
 
 // Get reviews for a product
-app.get('/api/products/:id/reviews', async (req, res) => {
+app.get('/api/products/:productId/reviews', async (req, res) => {
   try {
-    const { id } = req.params;
+    const productId = req.params.productId;
     const result = await pool.query(
       'SELECT * FROM user_reviews WHERE product_id = $1 ORDER BY created_at DESC',
-      [id]
+      [productId]
     );
     
     res.json(result.rows);
