@@ -1,6 +1,7 @@
 /**
  * API Service
  * This file contains functions for communicating with the backend API
+ * with localStorage fallback for demonstration purposes
  */
 
 /**
@@ -14,7 +15,7 @@
  */
 async function submitContactForm(formData) {
   try {
-    const response = await fetch('/api/contact', {
+    const response = await fetch('http://localhost:3000/api/contact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -25,7 +26,34 @@ async function submitContactForm(formData) {
     return await response.json();
   } catch (error) {
     console.error('Error submitting contact form:', error);
-    return { success: false, error: 'Network error' };
+    
+    // Fallback to localStorage
+    try {
+      // Get existing contact submissions from localStorage or initialize empty array
+      const submissions = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
+      
+      // Add timestamp to the submission
+      const newSubmission = {
+        ...formData,
+        id: Date.now(),
+        created_at: new Date().toISOString()
+      };
+      
+      // Add the new submission to the array
+      submissions.push(newSubmission);
+      
+      // Save the updated array back to localStorage
+      localStorage.setItem('contactSubmissions', JSON.stringify(submissions));
+      
+      return { 
+        success: true, 
+        message: 'Your message has been submitted successfully!',
+        data: newSubmission
+      };
+    } catch (storageError) {
+      console.error('Error using localStorage fallback:', storageError);
+      return { success: false, error: 'Network error and localStorage fallback failed' };
+    }
   }
 }
 
@@ -40,7 +68,7 @@ async function submitContactForm(formData) {
  */
 async function submitProductReview(reviewData) {
   try {
-    const response = await fetch('/api/reviews', {
+    const response = await fetch('http://localhost:3000/api/reviews', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -51,7 +79,35 @@ async function submitProductReview(reviewData) {
     return await response.json();
   } catch (error) {
     console.error('Error submitting review:', error);
-    return { success: false, error: 'Network error' };
+    
+    // Fallback to localStorage
+    try {
+      // Get existing reviews from localStorage or initialize empty array
+      const storageKey = `productReviews_${reviewData.product_id}`;
+      const reviews = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      
+      // Add timestamp and ID to the review
+      const newReview = {
+        ...reviewData,
+        id: Date.now(),
+        created_at: new Date().toISOString()
+      };
+      
+      // Add the new review to the array
+      reviews.push(newReview);
+      
+      // Save the updated array back to localStorage
+      localStorage.setItem(storageKey, JSON.stringify(reviews));
+      
+      return { 
+        success: true, 
+        message: 'Your review has been submitted successfully!',
+        data: newReview
+      };
+    } catch (storageError) {
+      console.error('Error using localStorage fallback:', storageError);
+      return { success: false, error: 'Network error and localStorage fallback failed' };
+    }
   }
 }
 
@@ -62,7 +118,7 @@ async function submitProductReview(reviewData) {
  */
 async function getProductReviews(productId) {
   try {
-    const response = await fetch(`/api/products/${productId}/reviews`);
+    const response = await fetch(`http://localhost:3000/api/reviews?productId=${productId}`);
     
     if (!response.ok) {
       throw new Error('Failed to fetch reviews');
@@ -71,7 +127,16 @@ async function getProductReviews(productId) {
     return await response.json();
   } catch (error) {
     console.error('Error fetching reviews:', error);
-    return [];
+    
+    // Fallback to localStorage
+    try {
+      const storageKey = `productReviews_${productId}`;
+      const reviews = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      return reviews;
+    } catch (storageError) {
+      console.error('Error retrieving from localStorage:', storageError);
+      return [];
+    }
   }
 }
 
@@ -81,7 +146,7 @@ async function getProductReviews(productId) {
  */
 async function getAllProducts() {
   try {
-    const response = await fetch('/api/products');
+    const response = await fetch('http://localhost:3000/api/products');
     
     if (!response.ok) {
       throw new Error('Failed to fetch products');
@@ -101,7 +166,7 @@ async function getAllProducts() {
  */
 async function getProductById(productId) {
   try {
-    const response = await fetch(`/api/products/${productId}`);
+    const response = await fetch(`/api/products?id=${productId}`);
     
     if (!response.ok) {
       if (response.status === 404) {

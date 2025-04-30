@@ -2,23 +2,19 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
-const path = require('path');
 
 // Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 3000;
 
 // Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('./')); // Serve static files from the current directory
+app.use(express.static('./')); 
 
 // Configure PostgreSQL connection
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
 // Test database connection
@@ -29,21 +25,6 @@ pool.connect()
 // Create tables if they don't exist
 const initializeDatabase = async () => {
   try {
-    // Create products table
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS products (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(100) NOT NULL,
-        description TEXT NOT NULL,
-        rating DECIMAL(2,1) NOT NULL,
-        review_count INTEGER NOT NULL,
-        pros TEXT[] NOT NULL,
-        cons TEXT[] NOT NULL,
-        image_url TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )
-    `);
-    
     // Create contact submissions table
     await pool.query(`
       CREATE TABLE IF NOT EXISTS contact_submissions (
@@ -60,7 +41,7 @@ const initializeDatabase = async () => {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS user_reviews (
         id SERIAL PRIMARY KEY,
-        product_id INTEGER REFERENCES products(id),
+        product_id INTEGER NOT NULL,
         name VARCHAR(100) NOT NULL,
         rating INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),
         comment TEXT NOT NULL,
@@ -77,33 +58,9 @@ const initializeDatabase = async () => {
 initializeDatabase();
 
 // API Routes
-
-// Get all products
-app.get('/api/products', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM products ORDER BY rating DESC');
-    res.json(result.rows);
-  } catch (err) {
-    console.error('Error fetching products:', err);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
-
-// Get product by ID
-app.get('/api/products/:productId', async (req, res) => {
-  try {
-    const productId = req.params.productId;
-    const result = await pool.query('SELECT * FROM products WHERE id = $1', [productId]);
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Product not found' });
-    }
-    
-    res.json(result.rows[0]);
-  } catch (err) {
-    console.error('Error fetching product:', err);
-    res.status(500).json({ error: 'Server error' });
-  }
+// Test endpoint
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'API is working!' });
 });
 
 // Submit contact form
@@ -154,19 +111,6 @@ app.post('/api/reviews', async (req, res) => {
       [product_id, name, rating, comment]
     );
     
-    // Update product review count and average rating
-    await pool.query(
-      `UPDATE products 
-       SET review_count = review_count + 1,
-           rating = (
-             SELECT AVG(rating) 
-             FROM user_reviews 
-             WHERE product_id = $1
-           )
-       WHERE id = $1`,
-      [product_id]
-    );
-    
     res.status(201).json({ 
       success: true,
       message: 'Your review has been submitted successfully!',
@@ -179,9 +123,14 @@ app.post('/api/reviews', async (req, res) => {
 });
 
 // Get reviews for a product
-app.get('/api/products/:productId/reviews', async (req, res) => {
+app.get('/api/reviews', async (req, res) => {
   try {
-    const productId = req.params.productId;
+    const productId = req.query.productId;
+    
+    if (!productId) {
+      return res.status(400).json({ error: 'Product ID is required' });
+    }
+    
     const result = await pool.query(
       'SELECT * FROM user_reviews WHERE product_id = $1 ORDER BY created_at DESC',
       [productId]
@@ -194,67 +143,7 @@ app.get('/api/products/:productId/reviews', async (req, res) => {
   }
 });
 
-// Root route - serve index.html
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// Serve specific HTML files
-app.get('/tonerin.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'tonerin.html'));
-});
-
-app.get('/product2.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'product2.html'));
-});
-
-app.get('/product3.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'product3.html'));
-});
-
-app.get('/product4.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'product4.html'));
-});
-
-app.get('/product5.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'product5.html'));
-});
-
-app.get('/rolunk.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'rolunk.html'));
-});
-
-app.get('/kapcsolat.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'kapcsolat.html'));
-});
-
-app.get('/adatvedelmi.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'adatvedelmi.html'));
-});
-
-app.get('/sutik.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'sutik.html'));
-});
-
-// Serve static files
-app.get('/css/style.css', (req, res) => {
-  res.sendFile(path.join(__dirname, 'css/style.css'));
-});
-
-app.get('/js/scripts.js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'js/scripts.js'));
-});
-
-app.get('/js/api.js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'js/api.js'));
-});
-
-// Fallback route
-app.get('*', (req, res) => {
-  res.redirect('/');
-});
-
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`API Server running on port ${PORT}`);
 });
