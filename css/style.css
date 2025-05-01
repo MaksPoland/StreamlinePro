@@ -10,11 +10,33 @@ body {
 .product-card {
     transition: transform 0.3s;
     overflow: hidden;
+    border-radius: 10px;
 }
 
 .product-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* Product-specific styles */
+.product-blutforde {
+    border-left: 4px solid #dc3545;
+}
+
+.product-herzena {
+    border-left: 4px solid #0d6efd;
+}
+
+.product-cannabis {
+    border-left: 4px solid #20c997;
+}
+
+.product-cardione {
+    border-left: 4px solid #fd7e14;
+}
+
+.product-tonerin {
+    border-left: 4px solid #6f42c1;
 }
 
 .product-image-container {
