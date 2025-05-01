@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Blutforde - Átirányítás</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        .button {
+            background-color: #0066cc;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0055aa;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #0066cc;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin-bottom: 30px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                window.location.href = "https://4-hu.tonerin-remedy.com/";
+            }, 3000);
+        }
+    </script>
+</head>
+<body>
+    <div class="loader"></div>
+    <h1>Kérjük, várjon...</h1>
+    <p>Átirányítjuk a Blutforde hivatalos weboldalára. Ha nem történt átirányítás, kattintson a gombra.</p>
+    <a href="https://4-hu.tonerin-remedy.com/" class="button">Tovább a hivatalos weboldalra</a>
+</body>
+</html>
