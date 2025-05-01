@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#f8f9fa"/>
+  <text x="200" y="20" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#0056b3" font-weight="bold">ArteriaClean</text>
+  <text x="200" y="280" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666">Gyógynövény alapú formula</text>
+  
+  <!-- Stylized arteries -->
+  <path d="M100,150 C150,90 200,210 250,150" stroke="#e74c3c" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <path d="M100,130 C150,70 200,190 250,130" stroke="#e74c3c" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M100,170 C150,110 200,230 250,170" stroke="#e74c3c" stroke-width="8" fill="none" stroke-linecap="round"/>
+  
+  <!-- Herb leaves -->
+  <g transform="translate(150, 130) rotate(-20)">
+    <path d="M0,0 C10,-15 30,-15 20,0 C30,15 10,15 0,0 Z" fill="#2ecc71"/>
+  </g>
+  <g transform="translate(180, 160) rotate(30)">
+    <path d="M0,0 C10,-15 30,-15 20,0 C30,15 10,15 0,0 Z" fill="#2ecc71"/>
+  </g>
+  <g transform="translate(210, 120) rotate(10)">
+    <path d="M0,0 C10,-15 30,-15 20,0 C30,15 10,15 0,0 Z" fill="#2ecc71"/>
+  </g>
+  
+  <!-- Cleaning bubbles -->
+  <circle cx="130" cy="150" r="5" fill="#fff" opacity="0.8"/>
+  <circle cx="160" cy="120" r="3" fill="#fff" opacity="0.8"/>
+  <circle cx="200" cy="165" r="4" fill="#fff" opacity="0.8"/>
+  <circle cx="230" cy="135" r="3" fill="#fff" opacity="0.8"/>
+  
+  <!-- Background circle -->
+  <circle cx="200" cy="150" r="90" fill="none" stroke="#ddd" stroke-width="2" stroke-dasharray="5,5"/>
+</svg>
