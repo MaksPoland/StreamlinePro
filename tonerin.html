@@ -11,6 +11,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Structured Data - Product -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Tonerin",
+        "image": "https://kardiohealth.com/images/tonerin.jpg",
+        "description": "A Tonerin egy átfogó kardiovaszkuláris támogató komplex, amely több hatóanyag kombinációja révén támogatja a szívizom megfelelő működését és az érfalak egészségét.",
+        "brand": {
+            "@type": "Brand",
+            "name": "Tonerin"
+        },
+        "offers": {
+            "@type": "Offer",
+            "url": "https://hu.tonerin-remedy.com/",
+            "priceCurrency": "HUF",
+            "availability": "https://schema.org/InStock"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "reviewCount": "147",
+            "bestRating": "5",
+            "worstRating": "1"
+        }
+    }
+    </script>
 </head>
 <body>
     <!-- Navigation -->
@@ -294,6 +322,45 @@
                         <h2 class="h5 mb-0">Felhasználói vélemények</h2>
                     </div>
                     <div class="card-body">
+                        <!-- Schema.org Review Markup -->
+                        <script type="application/ld+json">
+                        {
+                            "@context": "https://schema.org",
+                            "@type": "Product",
+                            "name": "Tonerin",
+                            "review": [
+                                {
+                                    "@type": "Review",
+                                    "reviewRating": {
+                                        "@type": "Rating",
+                                        "ratingValue": "5",
+                                        "bestRating": "5"
+                                    },
+                                    "author": {
+                                        "@type": "Person",
+                                        "name": "Kovács László"
+                                    },
+                                    "datePublished": "2025-03-10",
+                                    "reviewBody": "Két évvel ezelőtt kezdtem el szedni a Tonerint, miután a kardiológusom javasolta. Az eredmények lenyűgözőek voltak. A szívritmusom stabilizálódott, és a vérnyomásom is normalizálódott."
+                                },
+                                {
+                                    "@type": "Review",
+                                    "reviewRating": {
+                                        "@type": "Rating",
+                                        "ratingValue": "4",
+                                        "bestRating": "5"
+                                    },
+                                    "author": {
+                                        "@type": "Person",
+                                        "name": "Nagy Judit"
+                                    },
+                                    "datePublished": "2025-02-15",
+                                    "reviewBody": "Orvosi ajánlásra kezdtem el használni a Tonerint. Mióta szedem, sokkal több energiám van és a szívdobogásom is ritkábban jelentkezik. Csak egy csillagot vontam le az ára miatt."
+                                }
+                            ]
+                        }
+                        </script>
+                        
                         <div class="review-item mb-4">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <div class="d-flex align-items-center">

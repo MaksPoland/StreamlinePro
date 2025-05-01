@@ -11,6 +11,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Structured Data - LocalBusiness -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Kardio Health",
+        "image": "https://kardiohealth.com/images/logo.svg",
+        "url": "https://kardiohealth.com",
+        "telephone": "+36-1-234-5678",
+        "email": "info@kardiohealth.com",
+        "description": "Kardio Health független egészségügyi portál, amely a szív- és érrendszeri támogató termékek értékelésére és összehasonlítására szakosodott.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Szív utca 42.",
+            "addressLocality": "Budapest",
+            "postalCode": "1052",
+            "addressCountry": "HU"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 47.4979,
+            "longitude": 19.0402
+        },
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "09:00",
+                "closes": "17:00"
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
     <!-- Navigation -->
